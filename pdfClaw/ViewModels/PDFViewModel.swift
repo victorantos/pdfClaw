@@ -298,6 +298,30 @@ final class PDFViewModel {
         }
     }
 
+    // MARK: - Vim Scroll
+
+    func scrollBy(dx: CGFloat, dy: CGFloat) {
+        guard let pdfView, let scrollView = pdfView.subviews.compactMap({ $0 as? NSScrollView }).first else { return }
+        let clipView = scrollView.contentView
+        var origin = clipView.bounds.origin
+        origin.x += dx
+        origin.y += dy
+        clipView.scroll(to: origin)
+        scrollView.reflectScrolledClipView(clipView)
+    }
+
+    func halfPageDown() {
+        guard let pdfView, let scrollView = pdfView.subviews.compactMap({ $0 as? NSScrollView }).first else { return }
+        let halfHeight = scrollView.contentView.bounds.height / 2
+        scrollBy(dx: 0, dy: halfHeight)
+    }
+
+    func halfPageUp() {
+        guard let pdfView, let scrollView = pdfView.subviews.compactMap({ $0 as? NSScrollView }).first else { return }
+        let halfHeight = scrollView.contentView.bounds.height / 2
+        scrollBy(dx: 0, dy: -halfHeight)
+    }
+
     // MARK: - Print
 
     func printDocument() {

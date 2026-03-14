@@ -58,9 +58,11 @@ brew install --cask pdfclaw
 
 ### Manual
 
-1. Download the latest `.dmg` from [Releases](https://github.com/victorantos/pdfClaw/releases)
-2. Drag pdfClaw to Applications
-3. Open any PDF
+1. Download the latest `.zip` from [Releases](https://github.com/victorantos/pdfClaw/releases)
+2. Unzip and move `pdfClaw.app` to Applications
+3. Double-click to open — macOS will block it since the app isn't notarized yet. Click **OK** to dismiss the dialog.
+4. Go to **System Settings → Privacy & Security**, scroll down to Security, and click **Open Anyway** next to _"pdfClaw" was blocked to protect your Mac_.
+5. pdfClaw will launch — macOS remembers your choice so you only need to do this once.
 
 ### Build from Source
 
