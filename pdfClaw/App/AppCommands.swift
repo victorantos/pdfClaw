@@ -34,6 +34,23 @@ struct AppCommands: Commands {
                 }
                 .keyboardShortcut("s", modifiers: [.command, .shift])
             }
+
+            Section {
+                Button("Toggle Reading Mode") {
+                    viewModel?.toggleReadingMode()
+                }
+                .keyboardShortcut("r", modifiers: .command)
+
+                Button("Cycle Theme") {
+                    viewModel?.cycleTheme()
+                }
+                .keyboardShortcut("t", modifiers: .command)
+
+                Button("Toggle Auto-Crop Margins") {
+                    viewModel?.toggleAutoCrop()
+                }
+                .keyboardShortcut("k", modifiers: [.command, .shift])
+            }
         }
 
         // MARK: - Go Menu
