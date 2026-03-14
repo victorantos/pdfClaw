@@ -53,6 +53,48 @@ struct AppCommands: Commands {
             }
         }
 
+        // MARK: - Annotations
+        CommandMenu("Annotate") {
+            Button("Highlight Mode") {
+                viewModel?.toggleAnnotationMode(.highlight)
+            }
+            .keyboardShortcut("h", modifiers: [.command, .shift])
+
+            Button("Note Mode") {
+                viewModel?.toggleAnnotationMode(.note)
+            }
+            .keyboardShortcut("n", modifiers: [.command, .shift])
+
+            Button("Freehand Mode") {
+                viewModel?.toggleAnnotationMode(.freehand)
+            }
+            .keyboardShortcut("d", modifiers: [.command, .shift])
+
+            Divider()
+
+            Button("Add Highlight to Selection") {
+                viewModel?.addHighlightAnnotation()
+            }
+            .keyboardShortcut("h", modifiers: [.command, .option])
+
+            Divider()
+
+            Button("Export Annotations…") {
+                guard let vm = viewModel else { return }
+                let markdown = vm.exportAnnotationsAsMarkdown()
+                guard !markdown.isEmpty else { return }
+                let panel = NSSavePanel()
+                panel.allowedContentTypes = [.plainText]
+                panel.nameFieldStringValue = "annotations.md"
+                panel.begin { response in
+                    if response == .OK, let url = panel.url {
+                        try? markdown.write(to: url, atomically: true, encoding: .utf8)
+                    }
+                }
+            }
+            .keyboardShortcut("e", modifiers: [.command, .shift])
+        }
+
         // MARK: - Go Menu
         CommandMenu("Go") {
             Button("Next Page") {

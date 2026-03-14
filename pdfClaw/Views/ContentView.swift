@@ -84,8 +84,18 @@ struct ContentView: View {
                     .padding(.top, 8)
                     .transition(.move(edge: .top).combined(with: .opacity))
             }
+
+            if viewModel.annotationMode != .none {
+                VStack {
+                    Spacer()
+                    AnnotationToolbar(viewModel: viewModel)
+                        .padding(.bottom, 12)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
         }
         .animation(.easeInOut(duration: 0.2), value: viewModel.showSearch)
+        .animation(.easeInOut(duration: 0.2), value: viewModel.annotationMode)
     }
 }
 
