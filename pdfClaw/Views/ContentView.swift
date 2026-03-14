@@ -27,6 +27,7 @@ struct ContentView: View {
             GoToPageView(viewModel: viewModel)
         }
         .focusedSceneValue(\.pdfViewModel, viewModel)
+        .background(WindowAccessor())
     }
 
     private var sidebarVisibility: Binding<NavigationSplitViewVisibility> {
@@ -69,7 +70,11 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if viewModel.pdfDocument != nil, !viewModel.isDocumentLocked {
                 ZStack {
-                    PDFKitView(viewModel: viewModel)
+                    if viewModel.isSplitViewActive {
+                        SplitPDFView(primaryViewModel: viewModel)
+                    } else {
+                        PDFKitView(viewModel: viewModel)
+                    }
                     if viewModel.isReadingMode {
                         ReadingModeOverlay(theme: viewModel.readingTheme)
                     }
