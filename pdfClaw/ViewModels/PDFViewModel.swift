@@ -17,6 +17,7 @@ final class PDFViewModel {
     var showGoToPage: Bool = false
     var showPasswordPrompt: Bool = false
     var isDocumentLocked: Bool = false
+    var isSplitViewActive: Bool = false
 
     // MARK: - Reading Mode
     var isReadingMode: Bool = false

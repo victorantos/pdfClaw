@@ -25,6 +25,8 @@
 		AA0001010000000000000012 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000012 /* KeyboardHandler.swift */; };
 		AA0001010000000000000013 /* ReadingModeOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000013 /* ReadingModeOverlay.swift */; };
 		AA0001010000000000000014 /* AnnotationToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000014 /* AnnotationToolbar.swift */; };
+		AA0001010000000000000015 /* WindowAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000015 /* WindowAccessor.swift */; };
+		AA0001010000000000000016 /* SplitPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000016 /* SplitPDFView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		AA0000010000000000000012 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		AA0000010000000000000013 /* ReadingModeOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingModeOverlay.swift; sourceTree = "<group>"; };
 		AA0000010000000000000014 /* AnnotationToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationToolbar.swift; sourceTree = "<group>"; };
+		AA0000010000000000000015 /* WindowAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAccessor.swift; sourceTree = "<group>"; };
+		AA0000010000000000000016 /* SplitPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitPDFView.swift; sourceTree = "<group>"; };
 		AA0000070000000000000001 /* pdfClaw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pdfClaw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -123,6 +127,8 @@
 				AA0000010000000000000012 /* KeyboardHandler.swift */,
 				AA0000010000000000000013 /* ReadingModeOverlay.swift */,
 				AA0000010000000000000014 /* AnnotationToolbar.swift */,
+				AA0000010000000000000015 /* WindowAccessor.swift */,
+				AA0000010000000000000016 /* SplitPDFView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,6 +245,8 @@
 				AA0001010000000000000012 /* KeyboardHandler.swift in Sources */,
 				AA0001010000000000000013 /* ReadingModeOverlay.swift in Sources */,
 				AA0001010000000000000014 /* AnnotationToolbar.swift in Sources */,
+				AA0001010000000000000015 /* WindowAccessor.swift in Sources */,
+				AA0001010000000000000016 /* SplitPDFView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

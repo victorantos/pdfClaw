@@ -36,6 +36,13 @@ struct AppCommands: Commands {
             }
 
             Section {
+                Button("Toggle Split View") {
+                    viewModel?.isSplitViewActive.toggle()
+                }
+                .keyboardShortcut("v", modifiers: [.command, .shift])
+            }
+
+            Section {
                 Button("Toggle Reading Mode") {
                     viewModel?.toggleReadingMode()
                 }
