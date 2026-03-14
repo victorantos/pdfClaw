@@ -26,7 +26,11 @@ Adobe Acrobat Reader requires **2.35 GB** to install just to open a PDF. macOS P
 - Continuous scroll with smooth rendering
 - Thumbnail sidebar + Table of Contents
 - Find in document (Cmd+F) with incremental search
-- Full keyboard navigation
+- Full keyboard navigation + Vim-style keys (j/k, gg/G, d/u)
+- Reading mode — distraction-free overlay with themes (standard, sepia, dark) and margin auto-crop
+- Annotations — highlights, notes, freehand drawing, and markdown export
+- Split view — compare two PDFs side-by-side
+- Lazy page loading, adaptive rendering, and page prefetching for speed
 - Encrypted PDF support (password prompt)
 - Print support
 - Dark mode
@@ -46,6 +50,10 @@ Adobe Acrobat Reader requires **2.35 GB** to install just to open a PDF. macOS P
 | Actual size | Cmd+1 |
 | Next/Prev page | Cmd+Down / Cmd+Up |
 | Toggle sidebar | Shift+Cmd+S |
+| Reading mode | Shift+Cmd+R |
+| Scroll down/up (vim) | j / k |
+| Half-page down/up | d / u |
+| Top/Bottom of document | gg / G |
 | Print | Cmd+P |
 
 ## Install
@@ -90,10 +98,10 @@ pdfClaw/
 
 ## Roadmap
 
-- [ ] Vim-style navigation (j/k, gg/G, / to search)
-- [ ] Reading mode with margin cropping
-- [ ] Annotations (highlights, notes, freehand)
-- [ ] Split view — compare two PDFs side-by-side
+- [x] Vim-style navigation (j/k, gg/G, d/u)
+- [x] Reading mode with margin cropping
+- [x] Annotations (highlights, notes, freehand)
+- [x] Split view — compare two PDFs side-by-side
 - [ ] Presentation mode
 - [ ] Homebrew cask
 - [ ] Notarized .dmg releases

@@ -6,17 +6,25 @@ struct ContentView: View {
     @State private var viewModel = PDFViewModel()
 
     var body: some View {
-        NavigationSplitView(columnVisibility: sidebarVisibility) {
-            sidebarContent
-                .navigationSplitViewColumnWidth(min: 150, ideal: 200, max: 300)
-        } detail: {
-            pdfContent
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .principal) {
-                ToolbarView(viewModel: viewModel)
+        ZStack {
+            NavigationSplitView(columnVisibility: sidebarVisibility) {
+                sidebarContent
+                    .navigationSplitViewColumnWidth(min: 150, ideal: 200, max: 300)
+            } detail: {
+                pdfContent
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .principal) {
+                    ToolbarView(viewModel: viewModel)
+                }
+            }
+
+            if viewModel.isPresentationMode {
+                PresentationView(viewModel: viewModel)
+                    .transition(.opacity)
             }
         }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.isPresentationMode)
         .onAppear {
             viewModel.loadDocument(from: document.data)
         }
