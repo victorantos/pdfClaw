@@ -58,7 +58,28 @@ struct PDFKitView: NSViewRepresentable {
                 self?.viewModel.syncScale()
             }
 
-            observations = [pageObs, scaleObs]
+            // Observe scroll for adaptive interpolation
+            if let scrollView = pdfView.subviews.compactMap({ $0 as? NSScrollView }).first {
+                let scrollBeganObs = NotificationCenter.default.addObserver(
+                    forName: NSScrollView.willStartLiveScrollNotification,
+                    object: scrollView,
+                    queue: .main
+                ) { [weak self] _ in
+                    self?.viewModel.onScrollBegan()
+                }
+
+                let scrollEndedObs = NotificationCenter.default.addObserver(
+                    forName: NSScrollView.didEndLiveScrollNotification,
+                    object: scrollView,
+                    queue: .main
+                ) { [weak self] _ in
+                    self?.viewModel.onScrollEnded()
+                }
+
+                observations = [pageObs, scaleObs, scrollBeganObs, scrollEndedObs]
+            } else {
+                observations = [pageObs, scaleObs]
+            }
         }
 
         deinit {

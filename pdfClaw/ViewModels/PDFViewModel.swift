@@ -37,23 +37,36 @@ final class PDFViewModel {
         var id: String { rawValue }
     }
 
+    var isLoading: Bool = false
+
+    private var prefetchQueue = DispatchQueue(label: "com.pdfclaw.prefetch", qos: .utility)
+    private var interpolationResetTask: Task<Void, Never>?
+
     // MARK: - Document Loading
 
     func loadDocument(from data: Data) {
-        let doc = PDFDocument(data: data)
-        if let doc {
-            if doc.isLocked {
-                isDocumentLocked = true
-                showPasswordPrompt = true
-                pdfDocument = doc
-            } else {
-                pdfDocument = doc
-                pageCount = doc.pageCount
-                isDocumentLocked = false
+        isLoading = true
+        let dataCopy = data
+        Task.detached(priority: .userInitiated) { [weak self] in
+            let doc = PDFDocument(data: dataCopy)
+            await MainActor.run {
+                guard let self else { return }
+                self.isLoading = false
+                if let doc {
+                    if doc.isLocked {
+                        self.isDocumentLocked = true
+                        self.showPasswordPrompt = true
+                        self.pdfDocument = doc
+                    } else {
+                        self.pdfDocument = doc
+                        self.pageCount = doc.pageCount
+                        self.isDocumentLocked = false
+                    }
+                }
+                self.applyDocumentToPDFView()
+                self.restoreLastPosition()
             }
         }
-        applyDocumentToPDFView()
-        restoreLastPosition()
     }
 
     func unlockDocument(password: String) -> Bool {
@@ -154,6 +167,38 @@ final class PDFViewModel {
         guard let pdfView, let currentPage = pdfView.currentPage,
               let doc = pdfView.document else { return }
         currentPageIndex = doc.index(for: currentPage)
+        prefetchAdjacentPages()
+    }
+
+    // MARK: - Adaptive Interpolation
+
+    func onScrollBegan() {
+        interpolationResetTask?.cancel()
+        pdfView?.interpolationQuality = .none
+    }
+
+    func onScrollEnded() {
+        interpolationResetTask?.cancel()
+        interpolationResetTask = Task { @MainActor [weak self] in
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            guard !Task.isCancelled else { return }
+            self?.pdfView?.interpolationQuality = .high
+        }
+    }
+
+    // MARK: - Page Prefetching
+
+    private func prefetchAdjacentPages() {
+        guard let doc = pdfDocument else { return }
+        let index = currentPageIndex
+        let pagesToPrefetch = [index - 1, index + 1, index + 2].filter { $0 >= 0 && $0 < doc.pageCount }
+        prefetchQueue.async {
+            for i in pagesToPrefetch {
+                guard let page = doc.page(at: i) else { continue }
+                let size = page.bounds(for: .mediaBox).size
+                _ = page.thumbnail(of: size, for: .mediaBox)
+            }
+        }
     }
 
     // MARK: - Search
