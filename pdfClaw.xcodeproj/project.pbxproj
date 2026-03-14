@@ -22,6 +22,7 @@
 		AA000101000000000000000D /* PDFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000000D /* PDFViewModel.swift */; };
 		AA000101000000000000000E /* PDFDropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000000E /* PDFDropDelegate.swift */; };
 		AA000101000000000000000F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000000F /* Assets.xcassets */; };
+		AA0001010000000000000012 /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000010000000000000012 /* KeyboardHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		AA000001000000000000000F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA0000010000000000000010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA0000010000000000000011 /* pdfClaw.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pdfClaw.entitlements; sourceTree = "<group>"; };
+		AA0000010000000000000012 /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHandler.swift; sourceTree = "<group>"; };
 		AA0000070000000000000001 /* pdfClaw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pdfClaw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 				AA000001000000000000000A /* GoToPageView.swift */,
 				AA000001000000000000000B /* WelcomeView.swift */,
 				AA000001000000000000000C /* ToolbarView.swift */,
+				AA0000010000000000000012 /* KeyboardHandler.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				AA000101000000000000000C /* ToolbarView.swift in Sources */,
 				AA000101000000000000000D /* PDFViewModel.swift in Sources */,
 				AA000101000000000000000E /* PDFDropDelegate.swift in Sources */,
+				AA0001010000000000000012 /* KeyboardHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
