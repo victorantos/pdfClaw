@@ -18,6 +18,15 @@ final class PDFViewModel {
     var showPasswordPrompt: Bool = false
     var isDocumentLocked: Bool = false
     var isSplitViewActive: Bool = false
+    var isPresentationMode: Bool = false
+
+    func enterPresentationMode() {
+        isPresentationMode = true
+    }
+
+    func exitPresentationMode() {
+        isPresentationMode = false
+    }
 
     // MARK: - Reading Mode
     var isReadingMode: Bool = false

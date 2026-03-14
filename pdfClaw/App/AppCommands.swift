@@ -60,6 +60,14 @@ struct AppCommands: Commands {
             }
         }
 
+        // MARK: - Presentation
+        CommandMenu("Present") {
+            Button("Start Presentation") {
+                viewModel?.enterPresentationMode()
+            }
+            .keyboardShortcut("p", modifiers: [.command, .shift])
+        }
+
         // MARK: - Annotations
         CommandMenu("Annotate") {
             Button("Highlight Mode") {
