@@ -57,6 +57,66 @@ final class PDFViewModel {
         pdfView?.displaysPageBreaks = !autoCropMargins
     }
 
+    // MARK: - Annotation State
+    var annotationMode: AnnotationMode = .none
+    var highlightColor: NSColor = .yellow
+
+    enum AnnotationMode: String, CaseIterable {
+        case none = "None"
+        case highlight = "Highlight"
+        case note = "Note"
+        case freehand = "Freehand"
+    }
+
+    func toggleAnnotationMode(_ mode: AnnotationMode) {
+        annotationMode = (annotationMode == mode) ? .none : mode
+    }
+
+    func addHighlightAnnotation() {
+        guard let pdfView, let selection = pdfView.currentSelection else { return }
+        selection.pages.forEach { page in
+            let selectionBounds = selection.bounds(for: page)
+            guard !selectionBounds.isEmpty else { return }
+            let annotation = PDFAnnotation(bounds: selectionBounds, forType: .highlight, withProperties: nil)
+            annotation.color = highlightColor
+            page.addAnnotation(annotation)
+        }
+        pdfView.currentSelection = nil
+    }
+
+    func addNoteAnnotation(at point: NSPoint, text: String, on page: PDFPage) {
+        let bounds = CGRect(x: point.x, y: point.y, width: 24, height: 24)
+        let annotation = PDFAnnotation(bounds: bounds, forType: .text, withProperties: nil)
+        annotation.contents = text
+        annotation.color = .systemYellow
+        page.addAnnotation(annotation)
+    }
+
+    func exportAnnotationsAsMarkdown() -> String {
+        guard let doc = pdfDocument else { return "" }
+        var lines: [String] = ["# Annotations\n"]
+        for i in 0..<doc.pageCount {
+            guard let page = doc.page(at: i) else { continue }
+            let annotations = page.annotations.filter { $0.type != nil }
+            if annotations.isEmpty { continue }
+            lines.append("## Page \(i + 1)\n")
+            for ann in annotations {
+                switch ann.type {
+                case "Highlight":
+                    lines.append("- **Highlight** at (\(Int(ann.bounds.origin.x)), \(Int(ann.bounds.origin.y)))")
+                case "Text":
+                    lines.append("- **Note**: \(ann.contents ?? "")")
+                case "Ink":
+                    lines.append("- **Drawing** at (\(Int(ann.bounds.origin.x)), \(Int(ann.bounds.origin.y)))")
+                default:
+                    lines.append("- \(ann.type ?? "Unknown") annotation")
+                }
+            }
+            lines.append("")
+        }
+        return lines.joined(separator: "\n")
+    }
+
     // MARK: - Search State
     var searchText: String = ""
     var searchResults: [PDFSelection] = []
