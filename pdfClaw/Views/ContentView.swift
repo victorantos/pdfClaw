@@ -64,7 +64,10 @@ struct ContentView: View {
     @ViewBuilder
     private var pdfContent: some View {
         ZStack(alignment: .top) {
-            if viewModel.pdfDocument != nil, !viewModel.isDocumentLocked {
+            if viewModel.isLoading {
+                ProgressView("Loading PDF...")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if viewModel.pdfDocument != nil, !viewModel.isDocumentLocked {
                 PDFKitView(viewModel: viewModel)
             } else if !viewModel.isDocumentLocked {
                 WelcomeView()
