@@ -70,6 +70,9 @@ struct ContentView: View {
             } else if viewModel.pdfDocument != nil, !viewModel.isDocumentLocked {
                 ZStack {
                     PDFKitView(viewModel: viewModel)
+                    if viewModel.isReadingMode {
+                        ReadingModeOverlay(theme: viewModel.readingTheme)
+                    }
                     KeyboardHandler(viewModel: viewModel)
                 }
             } else if !viewModel.isDocumentLocked {

@@ -18,6 +18,45 @@ final class PDFViewModel {
     var showPasswordPrompt: Bool = false
     var isDocumentLocked: Bool = false
 
+    // MARK: - Reading Mode
+    var isReadingMode: Bool = false
+    var readingTheme: ReadingTheme = .standard
+    var autoCropMargins: Bool = false
+
+    enum ReadingTheme: String, CaseIterable {
+        case standard = "Standard"
+        case sepia = "Sepia"
+        case dark = "Dark"
+
+        var next: ReadingTheme {
+            switch self {
+            case .standard: return .sepia
+            case .sepia: return .dark
+            case .dark: return .standard
+            }
+        }
+    }
+
+    func toggleReadingMode() {
+        isReadingMode.toggle()
+        if !isReadingMode {
+            readingTheme = .standard
+            autoCropMargins = false
+            pdfView?.displaysPageBreaks = true
+        } else {
+            pdfView?.displaysPageBreaks = !autoCropMargins
+        }
+    }
+
+    func cycleTheme() {
+        readingTheme = readingTheme.next
+    }
+
+    func toggleAutoCrop() {
+        autoCropMargins.toggle()
+        pdfView?.displaysPageBreaks = !autoCropMargins
+    }
+
     // MARK: - Search State
     var searchText: String = ""
     var searchResults: [PDFSelection] = []
@@ -47,9 +86,9 @@ final class PDFViewModel {
     func loadDocument(from data: Data) {
         isLoading = true
         let dataCopy = data
-        Task.detached(priority: .userInitiated) { [weak self] in
+        Task.detached(priority: .userInitiated) {
             let doc = PDFDocument(data: dataCopy)
-            await MainActor.run {
+            await MainActor.run { [weak self] in
                 guard let self else { return }
                 self.isLoading = false
                 if let doc {
